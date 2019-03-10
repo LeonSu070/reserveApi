@@ -34,7 +34,7 @@ class Reserve extends REST_Controller
         $result = $this->m_order->add_order($params);
         var_dump(__LINE__, $result);
         
-        if ($res)
+        if ($result)
         {
             $return_message = array (
                     'code' => '10000', 

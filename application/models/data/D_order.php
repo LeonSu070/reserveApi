@@ -26,8 +26,8 @@ class d_order extends CI_model
         if (empty($data_arr)) {
             return false;
         }
-        $this->DB_W->insert($this->table_name, $data_arr);
-        return $this->DB_W->insert_id();
+        $this->db->insert($this->table_name, $data_arr);
+        return $this->db->insert_id();
     }
 
     public function update($where_arr, $update_arr)
