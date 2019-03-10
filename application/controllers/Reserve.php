@@ -19,11 +19,21 @@ class Reserve extends REST_Controller
 
     function add_order_post()
     {
-        $user_name = $this->post('username');
-        var_dump($user_name);exit;
-        $this->load->model('m_order');
+        $params['user_name'] = $this->input->post('user_name');
+        $params['mobile'] = $this->input->post('mobile');
+        $params['company_name'] = $this->input->post('company_name');
+        $params['province'] = $this->input->post('province');
+        $params['city'] = $this->input->post('city');
+        $params['address_detail'] = $this->input->post('address_detail');
+        $params['description'] = $this->input->post('description');
+        $params['special_note'] = $this->input->post('special_note');
+        $params['order_type'] = $this->input->post('order_type');
+        $params['order_time'] = $this->input->post('order_time');
 
-        $this->m_order->add_order();
+        $this->load->model('m_order');
+        $result = $this->m_order->add_order($params);
+        var_dump(__LINE__, $result);
+        
         if ($res)
         {
             $return_message = array (

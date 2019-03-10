@@ -11,10 +11,13 @@ if (!defined('BASEPATH')){
  */
 class M_order extends CI_model
 {
-
+    var $DB_W = NULL;
+    var $DB_R = NULL;
+    var $table_name = 'reservation';
     public function __construct()
     {
-        $this->load->database();
+        //暂时不会主从库，需要分主从库时再拆分
+        $this->DB_W = $this->DB_R = $this->load->database();
     }
     
 

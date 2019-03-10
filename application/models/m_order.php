@@ -15,7 +15,7 @@ class M_order extends CI_model
         $this->load->model('data/d_order');
     }
 
-    public function add_order() {
-        return $this->d_order->insert();
+    public function add_order($data) {
+        return $this->d_order->insert($data);
     }
 }
