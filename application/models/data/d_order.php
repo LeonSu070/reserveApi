@@ -9,7 +9,7 @@ if (!defined('BASEPATH')){
  * @author Leon
  * @package Model
  */
-class M_order extends CI_model
+class D_order extends CI_model
 {
     var $DB_W = NULL;
     var $DB_R = NULL;
