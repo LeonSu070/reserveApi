@@ -8,7 +8,7 @@ if (!defined('BASEPATH'))
  * @author Jane <Jane@chope.co>
  * @package Model
  */
-class M_order extends CI_model
+class m_order extends CI_model
 {
     public function __construct()
     {
