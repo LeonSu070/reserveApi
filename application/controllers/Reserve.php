@@ -32,7 +32,6 @@ class Reserve extends REST_Controller
 
         $this->load->model('m_order');
         $result = $this->m_order->add_order($params);
-        var_dump(__LINE__, $result);
         
         if ($result)
         {
