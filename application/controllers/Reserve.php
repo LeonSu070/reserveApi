@@ -17,9 +17,10 @@ class Reserve extends REST_Controller
         parent::__construct();
     }
 
-    function add_order_get()
+    function add_order_post()
     {
         $user_name = $this->post('username');
+        var_dump($user_name);exit;
         $this->load->model('m_order');
 
         $this->m_order->add_order();
