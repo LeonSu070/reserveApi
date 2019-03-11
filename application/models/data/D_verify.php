@@ -28,8 +28,9 @@ class d_verify extends CI_model
             "template" => "vcode",
             "params" => json_encode(array("number"=>$code))
         );
-        $result = json_decode(Httphelper::post($this->sms_url, $data), TRUE);
-        if ($result['Code'] == 10000) {
+	$res = Httphelper::post($this->sms_url, $data);
+        $result = json_decode($res, TRUE);
+        if ($result['code'] == 10000) {
             return true;
         }
         return false;
