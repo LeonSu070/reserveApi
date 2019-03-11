@@ -23,21 +23,22 @@ class m_verify extends CI_model
         //发送code到用户手机号
         return $this->d_verify->send_code($mobile, $code);
     }
-    private function get_verify_code($mobile)
+    public function get_verify_code($mobile)
     {
         if (empty($mobile)) {
             return false;
         }
-        session_start();
-        $key = "verify_code_" . $mobile;
+        //获取code
+        $code = $this->d_verify->get_code($mobile);
         //session key已经存在
-        if (isset($_SESSION[$key]) && !empty($_SESSION[$key])) {
-            return $_SESSION[$key];
+        if (!empty($code)) {
+            return $code['code'];
         }
         //不存在则重新生成
         srand((double)microtime()*1000000); 
         $code = rand(1000,9999);
-        $_SESSION[$key]= $code;
+        //插入code
+        $this->d_verify->insert_code(array("mobile"=>$mobile,"code"=>$code));
         return $code;
     }
 

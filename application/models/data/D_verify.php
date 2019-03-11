@@ -11,10 +11,13 @@ if (!defined('BASEPATH')){
 require_once APPPATH . '/libraries/Httphelper.php';
 class d_verify extends CI_model
 {
+    var $table_name = 'vcode';
     public function __construct()
     {
         $this->sms_url = "http://sms.iyouhi.com/sms/sendByChope";
         $this->sms_token = "KJekeiJEWGS7YT5jwekj2NCBS7ejK";
+        //暂时不会主从库，需要分主从库时再拆分
+        $this->load->database();
     }
     
     public function send_code($mobile, $code)
@@ -30,6 +33,20 @@ class d_verify extends CI_model
             return true;
         }
         return false;
+    }
+
+    public function get_code($mobile)
+    {
+        $this->db->where('mobile', $mobile);
+        $this->db->where('ctime >', date("Y-m-d", time()-30*60));
+        return $this->db->get($this->table_name)->row_array();
+    }
+    public function insert_code($data)
+    {
+        if (empty($data)) {
+            return false;
+        }
+        return $this->db->insert($this->table_name, $data);
     }
 
 }
