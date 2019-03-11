@@ -23,10 +23,13 @@ class d_verify extends CI_model
             "token" => $this->sms_token,
             "phone_number" => $mobile,
             "template" => "vcode",
-            "params" => json_encode(array("number"=>$code));
+            "params" => json_encode(array("number"=>$code))
         );
-        return json_decode(Httphelper::post($this->sms_url, $data), TRUE);
-
+        $result = json_decode(Httphelper::post($this->sms_url, $data), TRUE);
+        if ($result['Code'] == 10000) {
+            return true;
+        }
+        return false;
     }
 
 }
