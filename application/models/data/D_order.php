@@ -3,9 +3,8 @@ if (!defined('BASEPATH')){
     exit('No direct script access allowed');
 }
 /**
- * Category
  *
- * @copyright copyright(2019) iyouhi all rights reserved
+ * @copyright copyright(2019) iyouhi
  * @author Leon
  * @package Model
  */

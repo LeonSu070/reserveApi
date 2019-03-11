@@ -30,6 +30,17 @@ class Reserve extends REST_Controller
         $params['order_type'] = $this->input->post('order_type');
         $params['order_time'] = $this->input->post('order_time');
 
+        $vcode = $this->input->post('vcode');
+
+        $this->load->model('m_verify');
+        if ($vcode != $this->m_verify->get_verify_code($params['mobile'])) {
+            $return_message = array (
+                    'code' => '20002', 
+                    'message' => "验证码错误"
+            );
+            $this->response($return_message, 200);
+        }
+
         $this->load->model('m_order');
         $result = $this->m_order->add_order($params);
         
@@ -43,8 +54,8 @@ class Reserve extends REST_Controller
         else
         {
             $return_message = array (
-                    'CODE' => '20001', 
-                    'MESSAGE' => "预约失败"
+                    'code' => '20000', 
+                    'message' => "预约失败"
             );
         }
         $this->response($return_message, 200);

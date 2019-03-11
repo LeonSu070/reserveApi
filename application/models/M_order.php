@@ -1,11 +1,11 @@
 <?php
-if (!defined('BASEPATH'))
+if (!defined('BASEPATH')){
     exit('No direct script access allowed');
+}
 /**
- * Category
  *
- * @copyright copyright(2015) chope all rights reserved
- * @author Jane <Jane@chope.co>
+ * @copyright copyright(2015) iyouhi
+ * @author Leon
  * @package Model
  */
 class m_order extends CI_model
