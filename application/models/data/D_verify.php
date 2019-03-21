@@ -39,7 +39,7 @@ class d_verify extends CI_model
     public function get_code($mobile)
     {
         $this->db->where('mobile', $mobile);
-        $this->db->where('ctime >', date("Y-m-d", time()-30*60));
+        $this->db->where('ctime >', date("Y-m-d H:i:s", time()-30*60));
         return $this->db->get($this->table_name)->row_array();
     }
     public function insert_code($data)

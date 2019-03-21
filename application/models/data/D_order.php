@@ -23,6 +23,7 @@ class d_order extends CI_model
         if (empty($data_arr)) {
             return false;
         }
+        $data_arr['ctime'] = date("Y-m-d H:i:s");
         return $this->db->insert($this->table_name, $data_arr);
     }
 
