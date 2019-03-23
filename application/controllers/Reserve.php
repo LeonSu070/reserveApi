@@ -24,6 +24,7 @@ class Reserve extends REST_Controller
         $params['company_name'] = $this->input->post('company_name');
         $params['province'] = $this->input->post('province');
         $params['city'] = $this->input->post('city');
+        $params['area'] = $this->input->post('area');
         $params['address_detail'] = $this->input->post('address_detail');
         $params['sample_name'] = $this->input->post('sample_name');
         $params['sample_amount'] = $this->input->post('sample_amount');
