@@ -21,7 +21,8 @@ class m_verify extends CI_model
         $code = $this->get_verify_code($mobile);
 
         //发送code到用户手机号
-        return $this->d_verify->send_code($mobile, $code);
+        $this->load->model('m_sms');
+        return $this->m_sms->send($mobile, array('number'=>$code), "vcode");
     }
     public function get_verify_code($mobile)
     {
@@ -35,6 +36,17 @@ class m_verify extends CI_model
             return $code['code'];
         }
         //不存在则重新生成
+        
+        $code = $this->genarate_code($mobile);
+        return $code;
+    }
+    /*
+     * 生成新的验证码
+     */
+    public function genarate_code($mobile){
+        if (empty($mobile)) {
+            return false;
+        }
         srand((double)microtime()*1000000); 
         $code = rand(1000,9999);
         //插入code

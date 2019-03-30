@@ -14,7 +14,7 @@ class d_verify extends CI_model
     var $table_name = 'vcode';
     public function __construct()
     {
-        $this->sms_url = "http://sms.iyouhi.com/sms/sendByChope";
+        $this->sms_url = "http://sms.aiyohey.com/sms/sendByChope";
         $this->sms_token = "KJekeiJEWGS7YT5jwekj2NCBS7ejK";
         //暂时不会主从库，需要分主从库时再拆分
         $this->load->database();
@@ -28,7 +28,7 @@ class d_verify extends CI_model
             "template" => "vcode",
             "params" => json_encode(array("number"=>$code))
         );
-	$res = Httphelper::post($this->sms_url, $data);
+	   $res = Httphelper::post($this->sms_url, $data);
         $result = json_decode($res, TRUE);
         if ($result['code'] == 10000) {
             return true;
@@ -39,7 +39,7 @@ class d_verify extends CI_model
     public function get_code($mobile)
     {
         $this->db->where('mobile', $mobile);
-        $this->db->where('ctime >', date("Y-m-d H:i:s", time()-30*60));
+        $this->db->where('ctime >', date("Y-m-d H:i:s", time()-600)); //十分钟内有效
         return $this->db->get($this->table_name)->row_array();
     }
     public function insert_code($data)
@@ -47,7 +47,7 @@ class d_verify extends CI_model
         if (empty($data)) {
             return false;
         }
-        return $this->db->insert($this->table_name, $data);
+        return $this->db->replace($this->table_name, $data);
     }
 
 }

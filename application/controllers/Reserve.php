@@ -54,6 +54,8 @@ class Reserve extends REST_Controller
                     'code' => '10000', 
                     'message' => "预约成功"
             );
+            //使验证码失效
+            $this->m_verify->genarate_code($params['mobile']);
         }
         else
         {
