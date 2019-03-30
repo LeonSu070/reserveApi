@@ -31,14 +31,14 @@ class d_sms extends CI_model
             "token" => $this->sms_token,
             "phone_number" => $mobile,
             "template" => $template,
-            "params" => json_encode($param);
+            "params" => json_encode($param),
         );
 	    $res = Httphelper::post($this->sms_url, $data);
         $result = json_decode($res, TRUE);
         if ($result['code'] == 10000) {
             //记日志
             $sms_log = array(
-                "bizid" = result['data']['BizId'];
+                "bizid" => $result['data']['BizId'],
                 "template" => $template,
                 "mobile" => $mobile,
                 "params" => json_encode($param),

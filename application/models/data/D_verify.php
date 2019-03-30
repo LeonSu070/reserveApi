@@ -47,6 +47,7 @@ class d_verify extends CI_model
         if (empty($data)) {
             return false;
         }
+        $data['ctime'] = time();
         return $this->db->replace($this->table_name, $data);
     }
 
