@@ -36,7 +36,7 @@ class m_order extends CI_model
             //给自己发短信
             $params = array(
                 'user_name' => $data['user_name'], 
-                'order_time' => $data['order_time'],
+                'order_time' => date("Y年m月d日H:i", strtotime($data['order_time'])), 
                 'order_type' => $this->order_type_sms_template[$data['order_type']]['name'],
                 'sample_amount' => $data['sample_amount'], 
                 'sample_name' => $data['sample_name'], 
@@ -49,7 +49,7 @@ class m_order extends CI_model
             //给客户发短信
             $params = array(
                 'user_name' => $data['user_name'], 
-                'order_time' => $data['order_time'], 
+                'order_time' => date("Y年m月d日H:i", strtotime($data['order_time'])), 
                 'order_type' => $this->order_type_sms_template[$data['order_type']]['name'], 
                 'sample_amount' => $data['sample_amount'], 
                 'sample_name' => $data['sample_name'], 
