@@ -20,6 +20,7 @@ class Reserve extends REST_Controller
     function add_order_post()
     {
         $params['user_name'] = $this->input->post('user_name');
+        $params['memberid'] = $this->input->post('memberid');
         $params['mobile'] = $this->input->post('mobile');
         $params['id_number'] = $this->input->post('id_number');
         $params['company_name'] = $this->input->post('company_name');
