@@ -97,9 +97,9 @@ class m_order extends CI_model
         }
         return $return;
     }
-
-    public function get_order_by_date_type($oder_date, $order_type){
+    //获取某一天的订单
+    public function get_order_by_date_type($order_date, $order_type){
         
-        return $this->d_order->get_order_by_date_type($oder_date, $order_type);
+        return $this->d_order->get_order_by_date_type($order_date, $order_type);
     }
 }
