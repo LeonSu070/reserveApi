@@ -45,4 +45,13 @@ class d_order extends CI_model
         $this->db->from($this->table_name);
         return $this->db->count_all_results();
     }
+
+    public function get_order_by_date_type($oder_date, $order_type){
+        $this->db->where('order_type', $order_type);
+        $this->db->where('order_time >', $order_date . " 00:00");
+        $this->db->where('order_time <', $order_date . " 23:59");
+        $query = $this->db->get($this->table_name);
+        return $query->result_array();
+    }
+    
 }

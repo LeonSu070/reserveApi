@@ -23,13 +23,14 @@ class m_order extends CI_model
         ),
     );
     var $Bmobile = "13321179308";
+    var $limit_order_number = 10;
     public function __construct()
     {
         $this->load->model('data/d_order');
     }
 
+    //下订单
     public function add_order($data) {
-
         $re = $this->d_order->insert($data);
         if( $re ){
             $this->load->model('m_sms');
@@ -58,5 +59,48 @@ class m_order extends CI_model
             $this->m_sms->send($data['mobile'], $params, $this->order_type_sms_template[$data['order_type']]['C']);
         }
         return $re; 
+    }
+
+    //获取可用时间
+    public function get_time($param){
+        //上门取货直接返回
+        if (!in_array($param['order_type'], array(1,2))) {
+            return false;
+        }
+        if ($param['order_type'] == 1) {
+            return array(
+                array('value' => '09:00', 'text' => '09:00'),
+                array('value' => '10:00', 'text' => '10:00'),
+                array('value' => '11:00', 'text' => '11:00'),
+                array('value' => '13:00', 'text' => '13:00'),
+                array('value' => '14:00', 'text' => '14:00'),
+                array('value' => '15:00', 'text' => '15:00'),
+            );
+        }
+        //获取当天所有订单
+        $order_list = $this->get_order_by_date_type($param['order_date'], $param['order_type']);
+
+        //计算上午和下午的订单数, 预约送检的订单只分上午和下午，上午以09:00表示，下午以13：00表示
+        $morning = $afternoon = 0;
+        foreach ($oder_list as $order) {
+            if (date("H", strtotime($order['order_time'])) == "09" ) {
+                $morning += 1;
+            } else {
+                $afternoon += 1;
+            }
+        }
+        $return = array();
+        if ($morning < $this->limit_order_number) {
+            $return[] = array('value' => '09:00', 'text' => '上午');
+        }
+        if ($afternoon < $this->limit_order_number) {
+            $return[] = array('value' => '13:00', 'text' => '下午');
+        }
+        return $return;
+    }
+
+    public function get_order_by_date_type($oder_date, $order_time){
+        
+        return $this->d_order->get_order_by_date_type($oder_date, $order_time);
     }
 }
