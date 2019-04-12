@@ -34,7 +34,7 @@ class m_order extends CI_model
         //如果超出额度，则禁止下订单
         if ($data['order_type'] == 2) {
             //获取当天所有订单
-            $order_list = $this->get_order_by_date_type(date("Y-m-d", strtotime($data['order_time']), $data['order_type']);
+            $order_list = $this->get_order_by_date_type(date("Y-m-d", strtotime($data['order_time'])), $data['order_type']);
             //计算上午和下午的订单数, 预约送检的订单只分上午和下午，上午以09:00表示，下午以13：00表示
             $morning = $afternoon = 0;
             foreach ($order_list as $order) {
