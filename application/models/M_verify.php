@@ -22,7 +22,7 @@ class m_verify extends CI_model
 
         //发送code到用户手机号
         $this->load->model('m_sms');
-        return $this->m_sms->send($mobile, array('number'=>$code), "vcode");
+        return $this->m_sms->send($mobile, array('jymcode'=>$code), "vcode");
     }
     public function get_verify_code($mobile)
     {
