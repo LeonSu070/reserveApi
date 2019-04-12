@@ -44,10 +44,20 @@ class m_order extends CI_model
                     $afternoon += 1;
                 }
             }
-            if (date("H", strtotime($data['order_time'])) == "09" && $morning >= $this->limit_order_number ) {
-                return false;
-            }
-            if (date("H", strtotime($data['order_time'])) == "13" && $afternoon >= $this->limit_order_number ) {
+            $is_morning = false;
+            if (date("H", strtotime($data['order_time'])) == "09") {
+                $is_morning = true;
+                if($morning >= $this->limit_order_number){
+                    return false;
+                }
+                $morning++;
+            } elseif (date("H", strtotime($data['order_time'])) == "13") {
+                $is_morning = false;
+                if($afternoon >= $this->limit_order_number){
+                    return false;
+                }
+                $afternoon++;
+            } else {
                 return false;
             }
         }
@@ -57,6 +67,7 @@ class m_order extends CI_model
         if( $re ){
             $this->load->model('m_sms');
             //给自己发短信
+            /*
             $params = array(
                 'user_name' => $data['user_name'], 
                 'order_time' => date("Y年m月d日H:i", strtotime($data['order_time'])), 
@@ -67,17 +78,50 @@ class m_order extends CI_model
                 'id_number' => $data['id_number'], 
                 'address' => $data['province'] . $data['city'] . $data['area'] . $data['address_detail'],
             );
+            */
+            if ($data['order_type'] == 1) {
+                $params = array(
+                    'clientname' => $data['user_name'], 
+                    'yuyuetime' => date("Y年m月d日H点", strtotime($data['order_time'])), 
+                    'member_id' => $data['memberid'],
+                    'ypname' => $data['sample_name'],
+                    'ypnum' => $data['sample_amount'], 
+                    'phonenumber' => $data['mobile'],
+                    'address' => $data['province'] . $data['city'] . $data['area'] . $data['address_detail'],
+                    'idnumber' => $data['id_number'],
+                );
+            } else {
+                $params = array(
+                    'clientname' => $data['user_name'], 
+                    'yuyuetime' => $is_morning ? date("Y年m月d日上午", strtotime($data['order_time'])) : date("Y年m月d日下午", strtotime($data['order_time'])), 
+                    'yuyuelsh' => $is_morning ? $morning : $afternoon ,
+                    'member_id' => $data['memberid'],
+                    'ypname' => $data['sample_name'],
+                    'ypnum' => $data['sample_amount'], 
+                    'phonenumber' => $data['mobile'],
+                    'idnumber' => $data['id_number'],
+                    'yuyueaddress' => '总部',
+                );
+            }
             $this->m_sms->send($this->Bmobile, $params, $this->order_type_sms_template[$data['order_type']]['B']);
         
             //给客户发短信
-            $params = array(
-                'user_name' => $data['user_name'], 
-                'order_time' => date("Y年m月d日H:i", strtotime($data['order_time'])), 
-                'order_type' => $this->order_type_sms_template[$data['order_type']]['name'], 
-                'sample_amount' => $data['sample_amount'], 
-                'sample_name' => $data['sample_name'], 
-            );
-        
+            if ($data['order_type'] == 1) {
+                $params = array(
+                    'clientname' => $data['user_name'], 
+                    'yuyuetime' => date("Y年m月d日H点", strtotime($data['order_time'])),  
+                    'ypname' => $data['sample_name'],
+                    'ypnum' => $data['sample_amount'],  
+                );
+            } else {
+                $params = array( 
+                    'yuyuetime' => $is_morning ? date("Y年m月d日上午", strtotime($data['order_time'])) : date("Y年m月d日下午", strtotime($data['order_time'])), 
+                    'yuyuelsh' => $is_morning ? $morning : $afternoon , 
+                    'ypname' => $data['sample_name'],
+                    'ypnum' => $data['sample_amount'], 
+                    'yuyueaddress' => '总部',
+                );
+            }
             $this->m_sms->send($data['mobile'], $params, $this->order_type_sms_template[$data['order_type']]['C']);
         }
         return $re; 
