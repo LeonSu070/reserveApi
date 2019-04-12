@@ -68,7 +68,7 @@ class Reserve extends REST_Controller
         $this->response($return_message, 200);
     }
     //获取可用时间
-    function get_time_get()
+    function get_time_post()
     {
         
         $params['order_type'] = $this->input->post('order_type');

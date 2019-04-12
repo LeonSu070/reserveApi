@@ -14,7 +14,7 @@ class d_verify extends CI_model
     var $table_name = 'vcode';
     public function __construct()
     {
-        $this->sms_url = "http://sms.aiyohey.com/sms/sendByChope";
+        $this->sms_url = "http://sms.aiyohey.com/sms/send2";
         $this->sms_token = "KJekeiJEWGS7YT5jwekj2NCBS7ejK";
         //暂时不会主从库，需要分主从库时再拆分
         $this->load->database();

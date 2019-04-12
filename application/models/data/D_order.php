@@ -46,7 +46,7 @@ class d_order extends CI_model
         return $this->db->count_all_results();
     }
 
-    public function get_order_by_date_type($oder_date, $order_type){
+    public function get_order_by_date_type($order_date, $order_type){
         $this->db->where('order_type', $order_type);
         $this->db->where('order_time >', $order_date . " 00:00");
         $this->db->where('order_time <', $order_date . " 23:59");
