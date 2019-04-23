@@ -134,6 +134,13 @@ class m_order extends CI_model
             return false;
         }
         if ($param['order_type'] == 1) {
+            if ($param['order_date'] == date("Y-m-d")) {
+                return array(
+                    array('value' => '13:00', 'text' => '13:00'),
+                    array('value' => '14:00', 'text' => '14:00'),
+                    array('value' => '15:00', 'text' => '15:00'),
+                );
+            }
             return array(
                 array('value' => '09:00', 'text' => '09:00'),
                 array('value' => '10:00', 'text' => '10:00'),

@@ -72,7 +72,7 @@ class Reserve extends REST_Controller
     {
         
         $params['order_type'] = $this->input->post('order_type');
-        $params['order_date'] = $this->input->post('order_date');
+        $params['order_date'] = $this->input->post('order_date') ? $this->input->post('order_date') : date("Y-m-d");
 
         $this->load->model('m_order');
         $result = $this->m_order->get_time($params);
