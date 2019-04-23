@@ -134,12 +134,14 @@ class m_order extends CI_model
             return false;
         }
         if ($param['order_type'] == 1) {
-            if ($param['order_date'] == date("Y-m-d")) {
+            if ($param['order_date'] == date("Y-m-d") && date("H") < 12 ) {
                 return array(
                     array('value' => '13:00', 'text' => '13:00'),
                     array('value' => '14:00', 'text' => '14:00'),
                     array('value' => '15:00', 'text' => '15:00'),
                 );
+            } elseif ($param['order_date'] == date("Y-m-d") && date("H") >= 12){
+                return array('value' => '', 'text' => '今日预约已满');
             }
             return array(
                 array('value' => '09:00', 'text' => '09:00'),
