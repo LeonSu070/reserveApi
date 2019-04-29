@@ -141,7 +141,9 @@ class m_order extends CI_model
                     array('value' => '15:00', 'text' => '15:00'),
                 );
             } elseif ($param['order_date'] == date("Y-m-d") && date("H") >= 12){
-                return array('value' => '', 'text' => '今日预约已满');
+                return array(
+                    array('value' => '', 'text' => '今日预约已满')
+                );
             }
             return array(
                 array('value' => '09:00', 'text' => '09:00'),
