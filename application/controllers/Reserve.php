@@ -84,12 +84,6 @@ class Reserve extends REST_Controller
                     'message' => "成功",
                     'data' => $result,
             );
-            //默认
-            $return_message['default'] = "";
-            foreach ($result as $v) {
-                $return_message['default'] = $v['value'];
-                break;
-            }
         }
         else
         {
